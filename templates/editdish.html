@@ -1,0 +1,93 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block body %}
+<div class="col-md-6">
+                            <div class="page-header">
+                                <h2>DISHES</h2>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Availability</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in dish %}
+                                    <tr>
+                                        <td>{{i.title}}</td>
+                                        <td>{{i.price}}</td>
+                                        {% if i.avail %}
+                                        <td>Available</td>
+                                        {% else %}
+                                        <td>Not Availble</td>
+                                         {% endif %}
+                                        <td>
+                                        <form action=""method="post">
+                                            {% csrf_token %}
+                                            {% if i.avail %}
+                                            <button type="submit" name='unavail' value="{{ i.id }}" class="btn btn-default">Unavailable</button>
+                                            {% else %}
+                                            <button type="submit" name='avail' value="{{ i.id }}" class="btn btn-success">Available</button>
+                                            {% endif %}
+                                            <button type="submit" name="delete" value="{{ i.id }}" class="btn btn-danger">Delete</button>
+                                         </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="page-header">
+                                <h2>Add Dish</h2>
+                            </div>
+                            <form method='post' enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Select Cotegory</label>
+                                    <select class="form-control" name="cat">
+                                        <option selected disabled>Select Category</option>
+                                        {% for i in cat %}
+                                           <option value="{{ i.id }}">{{ i.name }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Title</label>
+                                    <input type="text" name="title" class="form-control" id="exampleInputPassword1" placeholder="title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Price</label>
+                                    <input type="text" name="price" class="form-control" id="exampleInputPassword1" placeholder="Price">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="exampleInputPassword1">Mrp</label>
+                                    <input type="text" name="mrp" class="form-control" id="exampleInputPassword1" placeholder="Mrp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Image First</label>
+                                    <input type="file" name="img1" id="exampleInputFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Image Second</label>
+                                    <input type="file" name="img2" id="exampleInputFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Image Third</label>
+                                    <input type="file" name="img3" id="exampleInputFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Discription</label>
+                                    <textarea class="form-control" name='dis' rows="5" cols="15" placeholder="Enter discription"></textarea>
+                                </div>
+                                <button type="submit" name="adddish" class="btn btn-default">Submit</button>
+                            </form>
+                        </div>
+
+{% endblock %}

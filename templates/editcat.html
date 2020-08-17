@@ -1,0 +1,46 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block body %}
+<div class="col-md-6">
+                            <div class="page-header">
+                                <h2>Categories</h2>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Dish</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in cat %}
+                                    <tr>
+                                        <td>{{i.name}}</td>
+                                        <td>{{ i.dish_set.count }}</td>
+                                        <td>
+                                        <form action=""method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" name="delete" value="{{ i.id }}" class="btn btn-danger">Delete</button>
+                                         </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+</div>
+
+                    <div class="col-md-6">
+                            <div class="page-header">
+                                <h2>Add Category</h2>
+                            </div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Enter Category Name</label>
+                                    <input type="text" name='name' class="form-control" id="exampleInputEmail1" placeholder="Category">
+                                </div>
+                                <button type="submit" name="addcat" class="btn btn-default">Submit</button>
+                            </form>
+                    </div>
+{% endblock %}
